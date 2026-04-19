@@ -1,0 +1,28 @@
+[run]
+# Какие файлы включать в отчет о покрытии
+source = app
+omit = 
+    */tests/*
+    */__pycache__/*
+    */site-packages/*
+    */migrations/*
+    */venv/*
+
+[report]
+# Игнорировать строки с # pragma: no cover
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if __name__ == .__main__.:
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if False:
+
+# Показывать пропущенные строки
+show_missing = True
+
+[html]
+# Директория для HTML отчета
+directory = htmlcov

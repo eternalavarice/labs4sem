@@ -1,0 +1,5 @@
+[
+  {"id": "5", "amount": 1200.00, "category": "Rent", "date": "2024-01-01", "currency": "RUB"},
+  {"id": "6", "amount": 350.50, "category": "Utilities", "date": "2024-01-02", "currency": "RUB"},
+  {"id": "7", "amount": 89.99, "category": "Food", "date": "2024-01-03", "currency": "RUB"}
+]

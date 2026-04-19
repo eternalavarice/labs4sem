@@ -1,0 +1,5 @@
+id,amount,category,date,currency
+1,100.50,Food,2024-01-15,RUB
+2,250.00,Transport,2024-01-16,RUB
+3,75.30,Entertainment,2024-01-17,RUB
+4,500.00,Shopping,2024-01-18,RUB
