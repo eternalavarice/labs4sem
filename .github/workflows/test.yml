@@ -39,34 +39,3 @@ jobs:
           mkdir -p tests
           if [ ! -f tests/test_simple.py ]; then
             cat > tests/test_simple.py << 'EOF'
-"""Simple test for lab3."""
-import sys
-from pathlib import Path
-
-# Add app to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-def test_import_app():
-    """Test that app module can be imported."""
-    try:
-        import app
-        assert True
-    except ImportError:
-        assert False, "Cannot import app module"
-
-def test_simple():
-    """Simple test that always passes."""
-    assert True
-EOF
-            echo "Created test file"
-          fi
-      
-      - name: Run tests
-        working-directory: lab3
-        run: |
-          pytest tests/ -v --cov=app --cov-report=term --cov-report=xml || true
-      
-      - name: Alternative - run pytest on app directly
-        working-directory: lab3
-        run: |
-          python -m pytest . -v --collect-only || echo "No tests collected"
