@@ -1,0 +1,32 @@
+name: Test Lab3
+
+on:
+  push:
+    paths:
+      - 'lab3/**'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'lab3/**'
+      - '.github/workflows/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov flake8 mypy
+      
+      - name: Run tests in lab3 folder
+        working-directory: lab3
+        run: |
+          pytest tests/ -v --cov=app --cov-report=term
