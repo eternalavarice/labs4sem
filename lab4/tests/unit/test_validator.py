@@ -3,7 +3,7 @@
 import pytest
 from pathlib import Path
 
-from app.services.validator import TransactionValidatorv
+from app.services.validator import TransactionValidator
 from app.core.exceptions import ValidationError, DuplicateIdError
 
 
