@@ -1,0 +1,44 @@
+name: Test Lab4
+
+on:
+  push:
+    paths:
+      - 'lab4/**'
+      - '.github/workflows/test-lab4.yml'
+  pull_request:
+    paths:
+      - 'lab4/**'
+
+jobs:
+  test-lab4:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: lab4
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov pytest-mock flake8 mypy
+      
+      - name: Check code style
+        run: flake8 app/ main.py --max-line-length=100 --count --statistics || true
+      
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ -v --cov=app --cov-report=term --cov-report=xml --cov-fail-under=70
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./lab4/coverage.xml
+          flags: lab4
+          fail_ci_if_error: false
