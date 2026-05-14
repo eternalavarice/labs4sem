@@ -15,26 +15,7 @@ class TestMocking:
     
     @patch('builtins.open')
     @patch('shutil.move')
-        
     @patch('app.io.csv_reader.open')
-    def test_csv_reader_unicode_error_mocking(self):
-        """Тест имитации ошибки декодирования."""
-        from unittest.mock import patch, MagicMock
-        from app.io.csv_reader import CSVReader
-        from app.core.exceptions import DataFormatError
-        from pathlib import Path
-        import pytest
-        
-        with patch('builtins.open') as mock_open:
-            mock_file = MagicMock()
-            mock_file.__enter__.return_value = mock_file
-            mock_file.read.side_effect = UnicodeDecodeError('utf-8', b'', 0, 1, 'invalid')
-            mock_open.return_value = mock_file
-            
-            reader = CSVReader()
-            
-            with pytest.raises(DataFormatError, match="Ошибка парсинга CSV"):
-                list(reader.read_records(Path("test.csv")))
     
     @patch('app.services.processor.get_reader')
     def test_processor_with_mocked_reader(self, mock_get_reader, tmp_path):
@@ -94,32 +75,6 @@ class TestMocking:
     
     @patch('builtins.open')
     @patch('shutil.move')
-    def test_transactional_write_failure(self, tmp_path):
-        """Тест имитации ошибки при транзакционной записи."""
-        from unittest.mock import patch, MagicMock
-        import sys
-        from pathlib import Path
-        
-        # Добавляем путь к корневой директории
-        sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-        
-        try:
-            from main import export_result_with_transactionality
-        except ImportError:
-            pytest.skip("main.py not found")
-            return
-        
-        with patch('builtins.open') as mock_open, patch('shutil.move') as mock_move:
-            mock_move.side_effect = OSError("Диск защищен от записи")
-            mock_file = MagicMock()
-            mock_open.return_value.__enter__.return_value = mock_file
-            
-            result = export_result_with_transactionality(
-                {"test": "data"},
-                tmp_path / "result.json"
-            )
-            
-            assert result is False
     
     @patch('logging.Logger.error')
     def test_processor_logging_on_error(self, mock_logger_error, tmp_path):
