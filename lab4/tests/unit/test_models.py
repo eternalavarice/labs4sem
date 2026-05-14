@@ -66,10 +66,9 @@ class TestTransactionModel:
 
     # Добавляем отдельный тест для None
     def test_none_date(self, sample_transaction_data):
-        """Тест None как даты."""
         sample_transaction_data["date"] = None
-        # Просто проверяем, что возникает любая ошибка
-        with pytest.raises(Exception):
+        # None вызывает ошибку валидации
+        with pytest.raises(ValidationError):
             Transaction.from_dict(sample_transaction_data)
         
     @pytest.mark.parametrize("category", [
